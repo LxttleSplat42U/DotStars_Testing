@@ -6,12 +6,16 @@
 //Required libraries to control the DotStars LEDs using an SPI interface
 #include <Adafruit_DotStar.h>
 #include <SPI.h> 
-
 #define NUMPIXELS 72 // Number of LEDs in strip
+unsigned long color = 0x00000F; //Staring color of dynamic test [50% brightness Blue = 0x00000F]
+unsigned long OGcolor = color; //Save starting color to reset dynamic test colours
+
 Adafruit_DotStar strip(NUMPIXELS, DOTSTAR_RBG); 
 
 void staticTest(int firstLEDs, unsigned long firstLEDsColorHex, int secondLEDS, unsigned long secondLEDsColorHex);
-void dynamicTest();
+//startPosition, Length (must be nagative), 
+void dynamicColorTest(int head, int tail, unsigned long color, int tDelay,  unsigned long OGcolor);
+
 
 void setup() {
   Serial.begin(115200); //Initialise serial port for debug messages
@@ -25,7 +29,8 @@ void setup() {
 
 void loop() {
 
-  //dynamicTest(); //only uncomment if staticTest() is commented out as well
+  // Only uncomment one of the two dynamic tests, if staticTest() is commented out as well
+  dynamicColorTest(0, -10, color, 20, OGcolor); //Example for 10 LED ling trail at an approximate 20 ms refresh rate starting at 50% brighteness Blue [0x00000F]
   
 }
 
@@ -52,16 +57,17 @@ void staticTest(int firstLEDs, unsigned long firstLEDsColorHex, int secondLEDS, 
   
 }
 
-void dynamicTest(){
-  // strip.setPixelColor(head, color); // 'On' pixel at head
-  // strip.setPixelColor(tail, 0);     // 'Off' pixel at tail
-  // strip.show();                     // Refresh strip
-  // delay(20);                        // Pause 20 milliseconds (~50 FPS)
+void dynamicColorTest(int head, int tail, unsigned long color, int tDelay, unsigned long startColor){
+  strip.setPixelColor(head, color); // 'On' pixel at head
+  strip.setPixelColor(tail, 0);     // 'Off' pixel at tail
+  strip.show();                     // Refresh strip
+  delay(tDelay);                    // Pause milliseconds
 
-  // if(++head >= NUMPIXELS) {         // Increment head index.  Off end of strip?
-  //   head = 0;                       //  Yes, reset head index to start
-  //   if((color >>= 8) == 0)          //  Next color (R->G->B) ... past blue now?
-  //     color = 0xFF0000;             //   Yes, reset to red
-  // }
-  // if(++tail >= NUMPIXELS) tail = 0; // Increment, reset tail index
+  if(++head >= NUMPIXELS) {         // Increment head index.  Off end of strip?
+    head = 0;                       //  Yes, reset head index to start
+    if((color >>= 8) == 0)          //  Next color (R->B->G) ... past green now?
+      color = startColor;             //  Yes, reset to red
+  }
+  if(++tail >= NUMPIXELS) tail = 0; // Increment, reset tail index
+  
 }
