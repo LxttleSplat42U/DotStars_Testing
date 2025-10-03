@@ -30,7 +30,7 @@ void setup() {
 void loop() {
 
   // Only uncomment one of the two dynamic tests, if staticTest() is commented out as well
-  dynamicColorTest(0, -10, color, 20, OGcolor); //Example for 10 LED ling trail at an approximate 20 ms refresh rate starting at 50% brighteness Blue [0x00000F]
+  //dynamicColorTest(0, -10, color, 20, OGcolor); //Example for 10 LED ling trail at an approximate 20 ms refresh rate starting at 50% brighteness Blue [0x00000F]
   
 }
 
