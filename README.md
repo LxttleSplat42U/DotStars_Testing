@@ -1,5 +1,6 @@
-# Testing data for DotStars LEDs																								
-<img width="1772" height="340" alt="image" src="https://github.com/user-attachments/assets/f9b92b6a-bc8a-4e09-baed-675c34b29047" />
+# Testing data for DotStars LEDs																												
+<img width="1772" height="340" alt="image" src="https://github.com/user-attachments/assets/0939bc88-ce50-4753-80f0-bbab516cddb2" />
+
 
 
 # Warning flashing images/videos present
